@@ -3,7 +3,7 @@ class Piece
   @@num_of_pieces = 0
 
   attr_accessor :x_pos, :y_pos, :type
-
+  
   def initialize(x_pos, y_pos, type)
     @x_pos = x_pos
     @y_pos = y_pos
@@ -14,14 +14,4 @@ class Piece
   def self.number_of_pieces
     @@num_of_pieces
   end
-
-  def draw
-    if @type == 1
-      puts "X"
-    else 
-      puts "O"      
-    end
-  end
-
-
 end
