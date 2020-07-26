@@ -1,4 +1,5 @@
 class Board
+
   def initialize
     board = ""
     board += "\n"
@@ -9,20 +10,21 @@ class Board
       board += "\n" + "\n"
     end
     puts(board)
-    @arr = Array.new(3) { Array.new(3, 0) }
-    @game_over = false
+    @is_piece_on_board = Array.new(3) { Array.new(3, 0) }
+    @piece_coor = Array.new(0) 
   end
 
-  attr_accessor :game_over
+  attr_reader :piece_coor, :is_piece_on_board
 
   def add_new_piece(piece)
-    @arr[piece.x_pos][piece.y_pos] = 1
-    print_board(piece)
+    self.is_piece_on_board[piece.x_pos][piece.y_pos] = 1
+    self.piece_coor.push([piece.x_pos, piece.y_pos, piece.type])
+    print_board(piece.type)
   end
 
-
-  def in_a_row?(game_over)
-    @arr.each do |rows|
+  def in_a_row?
+    game_over = false
+    self.is_piece_on_board.each do |rows|
       count = 0
       rows.each do |pos|
         if pos == 1
@@ -36,25 +38,33 @@ class Board
       return game_over
   end
 
+  def in_a_column?
+    game_over = false
+    self.is_piece_on_board.each do |rows|
+      count = 0
+      row[0]
+  end
+
 
   def is_game_over?
-    game_over = false
-    in_a_row?(game_over)
+    in_a_row?
   end
   
   def print_board(string_rep)
     board = ""
     board += "\n"
-    for i in 0..2
-      for j in 0..2
-        if i == string_rep.x_pos && j == string_rep.y_pos 
-          board += " |" + string_rep.type + "| "
-        else
-          board += " |" + " " + "| "
+      for i in 0..2
+        for j in 0..2
+          if piece_coor.include?([i,j,"X"])
+              board += " |" + "X" + "| "
+          elsif piece_coor.include?([i,j,"O"])
+            board += " |" + "O" + "| "
+          else
+            board += " |" + " " + "| " 
+          end
         end
+        board += "\n" + "\n"
       end
-      board += "\n" + "\n"
-    end
     puts(board)
   end
 end
