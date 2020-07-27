@@ -39,10 +39,6 @@ class Board
   end
 
   def in_a_column?
-    game_over = false
-    self.is_piece_on_board.each do |rows|
-      count = 0
-      row[0]
   end
 
 
@@ -67,4 +63,5 @@ class Board
       end
     puts(board)
   end
+
 end
