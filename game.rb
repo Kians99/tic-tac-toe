@@ -31,19 +31,29 @@ def proper_piece(inp_cord, piece_type)
   end
 end
 
+def does_piece_exist?(grid, piece)
+  grid.piece_coor.any? do |curr|
+    curr == [piece.x_pos, piece.y_pos, 'X'] || 
+      curr == [piece.x_pos, piece.y_pos, 'O']
+  end
+end
+
 def main(game_mode, grid, piece_type)
   until grid.is_game_over?
     piece = proper_piece(gets.chomp, piece_type)
-    if piece != nil
-      grid.add_new_piece(piece)
-      if piece_type == "X"
-        piece_type = "O"
-      else
-        piece_type = "X"
-      end
-      puts "Next player's turn!"  
+    exists_alrd = does_piece_exist?(grid, piece)
+    if !piece.nil? && !exists_alrd
+        grid.add_new_piece(piece)
+        unless grid.is_game_over?
+          puts "Next player's turn!"
+        end
+        piece_type = 'X' if piece_type == 'O'
+        piece_type = 'O' if piece_type == 'X'
+    else
+      puts 'There is already a piece there!'
     end
   end
+  puts 'Game Over. We have a winner!'
 end
 
 puts 'Welcome to tic-tac-toe! If you would like to play with two players
