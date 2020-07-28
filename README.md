@@ -1,1 +1,1 @@
-Fully functioning Tic-tac-toe for the command line. Rub "game.rb" file. 
+Fully functioning Tic-tac-toe for the command line. Run "game.rb" file. 
