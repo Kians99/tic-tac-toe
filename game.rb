@@ -12,7 +12,6 @@ def str_to_int_arr(array)
       if str.to_i >= 0 && str.to_i <= 2
         str.to_i
       else
-        puts 'The coordinates are not in range'
         return nil
       end
     else
@@ -38,39 +37,43 @@ def does_piece_exist?(grid, piece)
   end
 end
 
-def main(game_mode, grid, piece_type)
+def main(grid, piece_type)
   until grid.is_game_over?
     piece = proper_piece(gets.chomp, piece_type)
-    exists_alrd = does_piece_exist?(grid, piece)
-    if !piece.nil? && !exists_alrd
-        grid.add_new_piece(piece)
-        unless grid.is_game_over?
-          puts "Next player's turn!"
-        end
-        piece_type = 'X' if piece_type == 'O'
-        piece_type = 'O' if piece_type == 'X'
-    else
-      puts 'There is already a piece there!'
+    if !piece.nil?
+      exists_alrd = does_piece_exist?(grid, piece)
+      if !exists_alrd
+          grid.add_new_piece(piece)
+          grid.num_of_pieces += 1
+          unless grid.is_game_over?
+            puts "Next player's turn!"
+          end
+          if piece.type == "O"
+            piece_type = 'X'
+          else
+            piece_type = "O"
+          end
+      else
+        puts 'There is already a piece there!'
+      end
     end
   end
-  puts 'Game Over. We have a winner!'
 end
 
-puts 'Welcome to tic-tac-toe! If you would like to play with two players
-please type "1". If you would like to play against the computer
-please type "2".'
+puts 'Welcome to tic-tac-toe. This is a two player game. Grab your friends or 
+family and press "1" to begin playing! Enjoy.'
 inp = gets.chomp
 if inp != '1' && inp != '2'
   puts 'You did not enter one of the two options!'
 elsif inp == "1"
-  puts 'Great! Would player 1 like to be "X" or "O"?'
+  puts 'Would the player that goes first like to be "X" or "O"?'
   x_or_o = gets.chomp
   if x_or_o.casecmp('X').zero? || x_or_o.casecmp('O').zero?
     puts "Awesome! Here's the board:" 
     board = Board.new
     puts "[0,0] is the top left corner and [2,2] is the bottom right. Please enter the 
-    coordinates like: \"x,y\"."
-    main(1, board, x_or_o.upcase)
+    coordinates like \"x,y\" (without the brackets!)."
+    main(board, x_or_o.upcase)
   else
     puts "That's not an option!"
   end
